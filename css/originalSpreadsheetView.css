@@ -1,0 +1,15 @@
+.table>tbody>tr>td{
+		font-size: 11px;
+		max-width:10em;
+		padding:3px;
+		text-align:center;
+		vertical-align:middle;
+		line-height:11px;
+		white-space: nowrap;
+		overflow-x: hidden;
+		text-overflow: ellipsis;
+	}
+	.table>tbody>tr>td:hover{
+		white-space: normal;
+		overflow-x: visible;
+	}
