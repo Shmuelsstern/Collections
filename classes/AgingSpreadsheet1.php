@@ -4,12 +4,13 @@ Class AgingSpreadsheet1{
 
     private $agingTableId;
     private $agingInfo;
-    private $baseResponsiblePayerId;
     private $allBalancesInfo;
+    private $baseResponsiblePayerId;
     private $responsiblePayersInfo;
     private $spreadsheetArray=[];
     private $latestReferenceDateAsMonthFrom2000;
     private $earliestReferenceDateAsMonthFrom2000;
+    private $numberOfMonthsInAging;
 
     public function __construct($agingTableId){
         $this->agingTableId=$agingTableId;
@@ -18,6 +19,7 @@ Class AgingSpreadsheet1{
         $this->setResponsiblePayersInfo();
         $this->setBaseResponsiblePayerId();
         $this->setLatestAndEarliestReferenceDateAsMonthFrom2000();
+        $this->setNumberOfMonthsInAging();
         $this->setSpreadsheetArray();
     }
 
@@ -64,8 +66,8 @@ Class AgingSpreadsheet1{
         return $monthFrom2000;
     }
 
-    function getNumberOfMonthsInAging(){
-        return $this->latestReferenceDateAsMonthFrom2000 - $this->earliestReferenceDateAsMonthFrom2000;
+    function setNumberOfMonthsInAging(){
+        $this->numberOfMonthsInAging= $this->latestReferenceDateAsMonthFrom2000 - $this->earliestReferenceDateAsMonthFrom2000;
     }
 
     function setSpreadsheetArray(){
@@ -74,7 +76,15 @@ Class AgingSpreadsheet1{
         }
     }
 
-    function getSpreadsheetView(){
+    function getOriginalSpreadsheet(){
+        $spreadsheetFields=[];
+        foreach($this as $key => $value){
+            $spreadsheetFields[$key]=$value;
+        }
+        return $spreadsheetFields;
+    }
+
+    /*function getSpreadsheetView(){
         for($i=0;$i<$this->agingInfo['rows_in_aging'];$i++){ 
             echo '<tr>';
             for($k=1;$k<4;$k++){
@@ -115,5 +125,6 @@ Class AgingSpreadsheet1{
         echo '</tr>';
     } 
     
+*/
 }
 ?>

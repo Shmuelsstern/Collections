@@ -9,7 +9,7 @@ include 'utils/top.php';
                 <div class="row">
                     <img class="img-responsive center-block padding" src='images/RESULTS2.png'/ alt='RESULTS'>
                 </div>
-                <form method="post" action="Models/loginVerifyModel.php?page=loginVerify" class="form-horizontal">
+                <form method="post" action="index.php?controller=Login&action=verifyLogin" class="form-horizontal">
                 <div class="form-group">
                     <label for="userName" class="col-sm-4 control-label">User name:</label>
                     <div class="col-sm-8">
@@ -22,6 +22,13 @@ include 'utils/top.php';
                     <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
                     </div>
                 </div>
+<?php if($this->action='verfiyLogin'){ ?>
+                <div class='row'>
+                    <div class='warning bg-warning text-center'>
+    <?php echo $viewmodel;?>
+                    </div>              
+                </div>
+<?php } ?>
                 <div class="form-group">
                     <div class="col-sm-offset-5 col-sm-10">
                     <button type="submit" class="btn btn-default">Sign in</button>
