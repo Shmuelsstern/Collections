@@ -8,17 +8,17 @@ class PreparedQuery extends Query{
             $this->inputParameters=$params;
         }
 
-        public function getResultsArrayArray(){
+        public function getResultsArrayArray($fetch_style=PDO::FETCH_BOTH){
             $dbConnection=$this->getConnection();
             $preparedStatement=$dbConnection->prepare($this->queryString);
             $preparedStatement->execute($this->inputParameters);
-            $queryResults=$preparedStatement->fetchAll();
+            $queryResults=$preparedStatement->fetchAll($fetch_style);
             $preparedStatement->closeCursor();
             return $queryResults;
         }
 
-        public function getArrayofResults(){
-            $result=$this->getResultsArrayArray();
+        public function getArrayofResults($fetch_style=PDO::FETCH_BOTH){
+            $result=$this->getResultsArrayArray($fetch_style);
             $resultsArray=$result[0];
             return $resultsArray;
         }

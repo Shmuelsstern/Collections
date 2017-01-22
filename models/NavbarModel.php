@@ -55,7 +55,7 @@ Class NavbarModel extends BaseModel{
                                             JOIN facilities f 
                                             ON at.facility_id = f.facility_id
                                             WHERE f.facility_name =?",[$_SESSION['facility']]);
-            $this->agingListArrays=$agingQuery->getResultsArrayArray();
+            return $this->agingListArrays=$agingQuery->getResultsArrayArray();
     }
 }
 

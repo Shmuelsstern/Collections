@@ -13,16 +13,16 @@ Class Query{
         return $dbInstance->getDbConnection();
     }
 
-    public function getResultsArrayArray(){
+    public function getResultsArrayArray($fetch_style=PDO::FETCH_BOTH){
         $dbConnection=$this->getConnection();
         $queryStatement=$dbConnection->query($this->queryString);
-        $queryResults=$queryStatement->fetchAll();
+        $queryResults=$queryStatement->fetchAll($fetch_style);
         $queryStatement->closeCursor();
         return $queryResults;
     }
 
-    public function getArrayofResults(){
-        $result=$this->getResultsArrayArray();
+    public function getArrayofResults($fetch_style=PDO::FETCH_BOTH){
+        $result=$this->getResultsArrayArray($fetch_style);
         $resultsArray=$result[0];
         return $resultsArray;
     }

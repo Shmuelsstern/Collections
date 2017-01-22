@@ -5,7 +5,7 @@ function getUserName($navController){
 }
 
 ?>
-<nav class='navbar navbar-default'>
+<nav class='navbar navbar-inverse navbar-fixed-top'>
     <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -21,12 +21,11 @@ function getUserName($navController){
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="index.php?controller=balances&action=originalSpreadsheet">Balances<span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
+        
         
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Balances <span class="caret"></span></a>
-          <ul class="dropdown-menu">
+          <ul id='agingList' class="dropdown-menu">
             <?php foreach($viewmodel['agingListArrays'] as $agingListArray){ ?>
             <li><a href="index.php?controller=balances&action=originalSpreadsheet&agingID=<?php echo $agingListArray['aging_id'];?>"><span class='agingLink' ><?=$agingListArray['aging_name'];?></span></a></li>
 

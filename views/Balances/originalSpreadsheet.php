@@ -11,9 +11,23 @@ function getYear($monthFrom2000){
 
 include 'utils/top.php';
 ?>
+<div class='container'>
+    <div class='row'>
+        <div class='col-sm-3'>
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="#">Grouped</a></li>
+                <li role="presentation"><a href="index.php?controller=Balances&action=individualMonths&agingID=<?php echo $this->viewmodel['agingTableId'];?>">Individual</a></li>
+            </ul>
+        </div>
+        <div class='col-sm-6'>
+            <h4 class='text-center'><strong><?php echo $this->viewmodel['agingInfo']['aging_name'];?></strong></h4>
+        </div>
+    </div>
+
+</ul>
 <table class="table table-bordered table-condensed ">
 <!--tableheader-->
-    <h4 class='text-center'><strong><?php echo $this->viewmodel['agingInfo']['aging_name'];?></strong></h4>
+    
     <thead>
         <tr>
 <?php $keys=array_keys($this->viewmodel['responsiblePayersInfo'][0]);
@@ -28,24 +42,31 @@ include 'utils/top.php';
         <?php } ?>
         </tr>
     </thead>
+    <tbody>
 <!--table-->
 <?php   for($i=0;$i<$this->viewmodel['agingInfo']['rows_in_aging'];$i++){ ?>
             <tr>
-<?php       for($k=1;$k<4;$k++){?>
-                <td><?php echo "{$this->viewmodel['responsiblePayersInfo'][$i][$k-1]}"; ?></td>
+<?php       foreach($this->viewmodel['responsiblePayersInfo'][$i] as $key=>$field){?>
+                <td class='<?php echo str_replace(' ', '', $key)."Td ".preg_replace('/[ ,()&]/','',$field);?>'><?php echo $field; ?></td>
 <?php       }
-            for(;$k<=$this->viewmodel['numberOfMonthsInAging']+3;$k++){
+            for($k=1;$k<=$this->viewmodel['numberOfMonthsInAging'];$k++){
                 if(isset($this->viewmodel['spreadsheetArray'][$i][$k])){?>
-                    <td><?php echo "{$this->viewmodel['spreadsheetArray'][$i][$k]}"; ?></td>
+                    <td class="text-right balanceColumn"><?php echo '<span class="dollarSign">$</span>'.$this->viewmodel['spreadsheetArray'][$i][$k];?></td>
  <?php          }else{ ?>
                     <td></td>
 <?php           }
             } ?>
             </tr>
 <?php   } ?>
+    </tbody>
 </table>
- 
+</div>
 <?php 
 include 'utils/bottom.html';
-
 ?>
+<script>
+        var spreadsheetArray=<?php echo json_encode($this->viewmodel['spreadsheetArray']);?>,
+        responsiblePayersInfo=<?php echo json_encode($this->viewmodel['responsiblePayersInfo']);?>;
+        console.log(spreadsheetArray,responsiblePayersInfo);
+</script>
+<script src='views/Balances/Balances.js'></script>

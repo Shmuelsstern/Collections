@@ -1,8 +1,8 @@
 .table>tbody>tr>td{
 		font-size: 11px;
-		max-width:10em;
+		max-width:7em;
 		padding:3px;
-		text-align:center;
+		/*text-align:center;*/
 		vertical-align:middle;
 		line-height:11px;
 		white-space: nowrap;
@@ -12,4 +12,13 @@
 	.table>tbody>tr>td:hover{
 		white-space: normal;
 		overflow-x: visible;
+	}
+	th{
+		text-align: center;
+	}
+	.dollarSign{
+		float:left;
+	}
+	.balanceColumn, .monthColumn{
+		width:65px;
 	}

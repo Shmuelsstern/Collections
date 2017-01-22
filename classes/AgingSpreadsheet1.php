@@ -27,14 +27,14 @@ Class AgingSpreadsheet1{
         $AgingInfoQuery= new Query("SELECT * 
                                     FROM aging_table 
                                     WHERE aging_id = $this->agingTableId");
-        $this->agingInfo=$AgingInfoQuery->getArrayofResults();
+        $this->agingInfo=$AgingInfoQuery->getArrayofResults(PDO::FETCH_ASSOC);
     }
 
     function setAllBalancesInfo(){
         $AllMonthlyBalancesQuery = new Query("SELECT monthly_balance_id,responsible_payer_id,monthly_balance,                                                           month_from_2000,is_worked_on 
                                                 FROM monthly_aging_balances
                                                 WHERE aging_table_id = $this->agingTableId");
-        $this->allBalancesInfo= $AllMonthlyBalancesQuery->getResultsArrayArray();
+        $this->allBalancesInfo= $AllMonthlyBalancesQuery->getResultsArrayArray(PDO::FETCH_ASSOC);
     }
 
     function setResponsiblePayersInfo(){
@@ -46,7 +46,7 @@ Class AgingSpreadsheet1{
                                             ON rp.payer_type_id = pt.payer_type_id
                                             WHERE rp.aging_table_id = $this->agingTableId 
                                             ORDER BY rp.responsible_payer_id ");
-        $this->responsiblePayersInfo=$ResponsiblePayersQuery->getResultsArrayArray();
+        $this->responsiblePayersInfo=$ResponsiblePayersQuery->getResultsArrayArray(PDO::FETCH_ASSOC);
     }
 
     function setBaseResponsiblePayerId(){
@@ -56,7 +56,6 @@ Class AgingSpreadsheet1{
     function setLatestAndEarliestReferenceDateAsMonthFrom2000(){
         $this->latestReferenceDateAsMonthFrom2000=$this->convertDateToMonthFrom2000($this->agingInfo['latest_reference_date']);
         $this->earliestReferenceDateAsMonthFrom2000=$this->convertDateToMonthFrom2000($this->agingInfo['earliest_reference_date']);
-        
     }
 
     function convertDateToMonthFrom2000($date){
@@ -72,7 +71,7 @@ Class AgingSpreadsheet1{
 
     function setSpreadsheetArray(){
         foreach($this->allBalancesInfo as $balanceInfo){
-            $this->spreadsheetArray[($balanceInfo['responsible_payer_id']-$this->baseResponsiblePayerId-1)][$this->latestReferenceDateAsMonthFrom2000-$balanceInfo['month_from_2000']+3]=$balanceInfo['monthly_balance'];
+            $this->spreadsheetArray[($balanceInfo['responsible_payer_id']-$this->baseResponsiblePayerId-1)][$this->latestReferenceDateAsMonthFrom2000-$balanceInfo['month_from_2000']]=$balanceInfo['monthly_balance'];
         }
     }
 
@@ -84,47 +83,5 @@ Class AgingSpreadsheet1{
         return $spreadsheetFields;
     }
 
-    /*function getSpreadsheetView(){
-        for($i=0;$i<$this->agingInfo['rows_in_aging'];$i++){ 
-            echo '<tr>';
-            for($k=1;$k<4;$k++){
-                echo "<td>{$this->responsiblePayersInfo[$i][$k-1]}</td>";
-            }
-            for(;$k<=$this->getNumberOfMonthsInAging()+3;$k++){
-                if(isset($this->spreadsheetArray[$i][$k])){
-                    echo "<td>{$this->spreadsheetArray[$i][$k]}</td>";
-                }else{
-                    echo "<td></td>";
-                }
-            }
-            echo '</tr>';
-        }
-    }  
-
-    function getMonth($monthFrom2000){
-        $mons = explode(" ","Dec Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov ");
-        return $mons[$monthFrom2000%12];
-    }
-
-    function getYear($monthFrom2000){
-        return floor($monthFrom2000/12);
-    }
-
-    function getSpreadsheetHead(){
-        echo '<tr>';
-        $keys=array_keys($this->responsiblePayersInfo[0]);
-        foreach($keys as $key){
-            if(gettype($key)!=='integer'){
-            echo '<th>'.$key.'</th>';
-            }
-        }
-        for($i=0;$i<$this->getNumberOfMonthsInAging();$i++){
-            $monthFrom2000=$this->latestReferenceDateAsMonthFrom2000-1-$i;
-            echo '<th>'.$this->getMonth($monthFrom2000)."'".$this->getYear($monthFrom2000).'</th>';
-        }
-        echo '</tr>';
-    } 
-    
-*/
 }
 ?>
