@@ -38,7 +38,7 @@ function getUserName($navController){
           </ul>
         </li>
       </ul>
-      <form class="navbar-form navbar-left">
+      <form class='displaynone' class="navbar-form navbar-left">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search">
         </div>

@@ -71,7 +71,7 @@ Class AgingSpreadsheet1{
 
     function setSpreadsheetArray(){
         foreach($this->allBalancesInfo as $balanceInfo){
-            $this->spreadsheetArray[($balanceInfo['responsible_payer_id']-$this->baseResponsiblePayerId-1)][$this->latestReferenceDateAsMonthFrom2000-$balanceInfo['month_from_2000']]=$balanceInfo['monthly_balance'];
+            $this->spreadsheetArray[($balanceInfo['responsible_payer_id']-$this->baseResponsiblePayerId-1)][$this->latestReferenceDateAsMonthFrom2000-$balanceInfo['month_from_2000']]=['monthlyBalanceId'=>$balanceInfo['monthly_balance_id'],'monthlyBalance'=>$balanceInfo['monthly_balance']];
         }
     }
 

@@ -22,3 +22,8 @@
 	.balanceColumn, .monthColumn{
 		width:65px;
 	}
+	.balanceColumn:hover{
+		background-color:lightblue;
+		font-weight: bold;
+		cursor: pointer;
+	}
