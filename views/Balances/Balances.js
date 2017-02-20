@@ -35,74 +35,131 @@ $(function () {
 
     balanceColumn.click(function (e) {
         spreadsheetView.css('display', "none");
-        $.get('index.php?controller=IndividualBalance&action=render&monthlyBalanceID=' + e.target.dataset.monthlyBalanceId, function (data) {
-            //var facility = new app.classes.facility();
-            app.views.individualBalance.render(JSON.parse(data));
-        });
+        individualBalance = new app.models.IndividualBalance(e.target.dataset.monthlyBalanceId);
+        // individualBalanceView = new app.views.IndividualBalance();
+        // individualBalanceView.render(individualBalance.monthlyBalance);
     });
 });
 
 
 var app = app || {};
-app.views= app.views || {};
+app.views = app.views || {};
 app.classes = app.classes || {};
+app.models = app.models || {};
 
-app.views.individualBalance = function () {
+app.views.IndividualBalance = function () {
+    console.log('constructiong view');
+    var body = $('body');
+
+    this.render = function render(dataObject) {
+        var facility = new app.classes.Facility(dataObject);
+        body.append(`
+                        <div class='container'>
+                            <div class='row'>
+                                <div class='col-sm-4'>`+
+            facility.renderInWell() +
+            `</div>
+                            </div>
+                        </div>
+       `);
+    };
+
+};
+
+app.models.IndividualBalance = function IndividualBalance(monthlyBalanceId) {
+    console.log('constructiong model');
+    let controller = new app.classes.controller('IndividualBalance', 'render');
+    //var monthlyBalance;
+
+    function loadMonthlyBalance(monthlyBalanceId) {
+        var balance = app.cache.search('individualBalance', { monthlyBalanceId: monthlyBalanceId });
+        if (balance) {
+            controller.actionRequest(balance);
+        } else {
+            $.get('index.php?controller=IndividualBalance&action=render&monthlyBalanceID=' + monthlyBalanceId, function (data) {
+                balance = JSON.parse(data);
+                console.log('parsed', balance);
+                app.cache.addToCache('individualBalance', balance);
+                controller.actionRequest(balance);
+            });
+        }
+    }
+
+    this.monthlyBalance = loadMonthlyBalance(monthlyBalanceId);
+
+    this.getMonthlyBalance = () => {
+        return monthlyBalance;
+    };
+
+};
+
+app.classes.Facility = function (dataObject) {
+    console.log('constructiong facility');
+
+    this.setFacilityFields = function setFacilityFields(dataObject) {
+        this.facilityName = dataObject.facility_name;
+        this.address1 = dataObject.address_1;
+        this.address2 = dataObject.address_2;
+        this.city = dataObject.city;
+        this.state = dataObject.state;
+        this.zip = dataObject.zip;
+        this.NPI = dataObject.NPI;
+        this.taxID = dataObject.tax_id;
+    };
+
+
+    this.setFacilityFields(dataObject);
+
+    this.renderInWell = function renderInWell() {
+        return `<div class ='well'>
+                    <h4>`+ this.facilityName + '</h4>' +
+            this.address1 + '<br>' +
+            this.address2 + '<br>' +
+            this.city + ' ' + this.state + ' ' + this.zip + '<br><br>' +
+            `<div class='row'>
+                        <div class='col-xs-6'>
+                            <strong>NPI: </strong>`+ this.NPI +
+                        `</div>
+                        <div class='col-xs-6'>
+                            <strong>Tax ID: </strong>`+ this.taxID +
+                        `</div>
+                    </div>   
+                </div>`;
+    };
+
+    function loadfacility(monthlyBalanceId) {
+
+    }
+
+};
+
+app.classes.controller = function (model, action) {
+    this.model = model;
+    this.action = action;
+
+    this.actionRequest = function (params) {
+    new app.views[this.model]()[this.action](params);
+    };
+};
+
+app.cache = function () {
+    var localVariables = {};
     return {
-        render: function(dataObject){
-            app.classes.facility.setFacilityFields(dataObject);
-            app.classes.facility.renderInWell();
+        search: function (arrayToSearch, itemToFind) {
+            if (localVariables[arrayToSearch] === undefined) {
+                return null;
+            }
+            console.log('returning from array');
+            return localVariables[arrayToSearch].find(function (item) {
+                return item.monthlyBalanceId === itemToFind.monthlyBalanceId;
+            });
+        },
+        addToCache: function (arrayToAddTo, itemToAdd) {
+            if (!localVariables[arrayToAddTo]) {
+                localVariables[arrayToAddTo] = [];
+            }
+            localVariables[arrayToAddTo].push(itemToAdd);
         }
     };
-} ();
-
-app.classes.facility = function () {
-    var body = $('body'),
-        facilityName,
-        address1,
-        address2,
-        city,
-        state,
-        zip,
-        NPI,
-        taxID;
-
-     return{
-         setFacilityFields:function(dataObject){
-             this.facilityName=dataObject.facility_name;
-             this.address1=dataObject.address_1;
-             this.address2=dataObject.address_2;
-             this.city=dataObject.city;
-             this.state=dataObject.state;
-             this.zip=dataObject.zip;
-             this.NPI=dataObject.NPI;
-             this.taxID=dataObject.tax_id;
-         },
-         renderInWell:function () {
-            body.append(`
-<div class='container'>
-    <div class='row'>
-        <div class='col-sm-4'>
-            <div class ='well'>
-                <h4>`+ this.facilityName + '</h4>' +
-                this.address1 + '<br>' +
-                this.address2 + '<br>' +
-                this.city + ' ' + this.state + ' ' + this.zip + '<br><br>' +
-                `<div class='row'>
-                    <div class='col-xs-6'>
-                        <strong>NPI: </strong>`+ this.NPI +
-                `</div>
-                    <div class='col-xs-6'>
-                        <strong>Tax ID: </strong>`+ this.taxID +
-                `</div>
-                </div>   
-           </div>
-        </div>
-    </div>
-</div>
-                `);
-        }
-     };
-
-}() ;
+}();
 
