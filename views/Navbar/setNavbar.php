@@ -27,7 +27,7 @@ function getUserName($navController){
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Balances <span class="caret"></span></a>
           <ul id='agingList' class="dropdown-menu">
             <?php foreach($viewmodel['agingListArrays'] as $agingListArray){ ?>
-            <li><a href="index.php?controller=balances&action=originalSpreadsheet&agingID=<?php echo $agingListArray['aging_id'];?>"><span class='agingLink' ><?=$agingListArray['aging_name'];?></span></a></li>
+            <li><a href="index.php?controller=balances&action=individualMonths&agingID=<?php echo $agingListArray['aging_id'];?>"><span class='agingLink' ><?=$agingListArray['aging_name'];?></span></a></li>
 
           <?php } ?> 
             

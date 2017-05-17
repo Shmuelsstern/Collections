@@ -16,7 +16,7 @@
                     agingListId.replaceWith(function () {
                         var replacement = '<ul id="agingList" class="dropdown-menu">';
                         agingList.forEach(function (aging) {
-                            replacement += '<li><a href="index.php?controller=balances&action=originalSpreadsheet&agingID=' + aging.aging_id + '"><span class="agingLink">' + aging.aging_name + '</span></a></li>';
+                            replacement += '<li><a href="index.php?controller=balances&action=individualMonths&agingID=' + aging.aging_id + '"><span class="agingLink">' + aging.aging_name + '</span></a></li>';
                         });
                         replacement += '</ul>';
                         console.log(replacement);
