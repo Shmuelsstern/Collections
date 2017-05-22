@@ -15,8 +15,8 @@ include 'utils/top.php';
     <div class='row'>
         <div class='col-sm-3'>
             <ul class="nav nav-tabs">
-                <li role="presentation" ><a href="#">Grouped</a></li>
-                <li role="presentation" class="active"><a href="#">Individual</a></li>
+                <li id='groupedTab' role="presentation" ><a href="#">Grouped</a></li>
+                <li id='individualTab' role="presentation" class="active"><a href="#">Individual</a></li>
             </ul>
         </div>
         <div class='col-sm-6'>
@@ -42,7 +42,7 @@ include 'utils/top.php';
                                         <td class='PayerTd <?php echo preg_replace('/[ ,()&]/','',$this->viewmodel['responsiblePayersInfo'][$i]['Payer']);?>'><?php echo $this->viewmodel['responsiblePayersInfo'][$i]['Payer'];?></td>
                                         <td class='NameTd <?php echo preg_replace('/[ ,()&]/','',$this->viewmodel['responsiblePayersInfo'][$i]['Name']);?>'><?php echo $this->viewmodel['responsiblePayersInfo'][$i]['Name'];?></td>
                                         <td class="monthColumn"><?php echo getMonth($monthFrom2000)." '".getYear($monthFrom2000);?></td>
-                                        <td data-monthly-balance-id=<?= $this->viewmodel['spreadsheetArray'][$i][$k]['monthlyBalanceId']?> class="text-right balanceColumn"><span class="dollarSign">$</span><?= $this->viewmodel['spreadsheetArray'][$i][$k]['monthlyBalance'];?></td>
+                                        <td data-monthly-balance-id=<?= $this->viewmodel['spreadsheetArray'][$i][$k]['monthlyBalanceId']?> class="text-right balanceColumn"><a href='index.php?controller=IndividualBalance&action=render&monthlyBalanceID=<?= $this->viewmodel['spreadsheetArray'][$i][$k]['monthlyBalanceId']?>'><span class="dollarSign">$</span><?= $this->viewmodel['spreadsheetArray'][$i][$k]['monthlyBalance'];?></a></td>
                                         <td></td>
                                         </tr>
                 <?php               }
@@ -82,7 +82,7 @@ include 'utils/top.php';
         <?php       }
                     for($k=1;$k<=$this->viewmodel['numberOfMonthsInAging'];$k++){
                         if(isset($this->viewmodel['spreadsheetArray'][$i][$k])){?>
-                            <td data-monthly-balance-id=<?= $this->viewmodel['spreadsheetArray'][$i][$k]['monthlyBalanceId']?> class="text-right balanceColumn"><span class="dollarSign">$</span><?= $this->viewmodel['spreadsheetArray'][$i][$k]['monthlyBalance'];?></td>
+                            <td data-monthly-balance-id=<?= $this->viewmodel['spreadsheetArray'][$i][$k]['monthlyBalanceId']?> class="text-right balanceColumn"><a href='index.php?controller=IndividualBalance&action=render&monthlyBalanceID=<?= $this->viewmodel['spreadsheetArray'][$i][$k]['monthlyBalanceId']?>'><span class="dollarSign">$</span><?= $this->viewmodel['spreadsheetArray'][$i][$k]['monthlyBalance'];?></a></td>
         <?php          }else{ ?>
                             <td></td>
         <?php           }

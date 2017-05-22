@@ -9,12 +9,18 @@ $(function () {
         });
     });
 
-    var payerTypeTd = $('.PayerTypeTd'),
+    const payerTypeTd = $('.PayerTypeTd'),
         payerTd = $('.PayerTd'),
         nameTd = $('.NameTd'),
         active = $('.active'),
         balanceColumn = $('.balanceColumn'),
-        spreadsheetView = $('.spreadsheetView');
+        spreadsheetView = $('.spreadsheetView'),
+        groupedTab=$('#groupedTab'),
+        individualTab=$('#individualTab'),
+        individualView=$('#individualView'),
+        originalSpreadsheetView=$('#originalSpreadsheetView');
+
+    let diplaying = '';
 
     payerTypeTd.click(function (event) {
         $('tbody tr').css('display', 'none');
@@ -30,11 +36,36 @@ $(function () {
         $('tbody tr').css('display', 'table-row');
     });
 
-    balanceColumn.click(function (e) {
+    /*balanceColumn.click(function (e) {
         spreadsheetView.css('display', "none");
         //individualBalance = new app.models.IndividualBalance(e.target.dataset.monthlyBalanceId);
         var controller = new app.classes.controller('IndividualBalance', 'render', e.target.dataset.monthlyBalanceId);
 
+    });*/
+
+    groupedTab.click(function(){
+        console.log(groupedTab.attr('class'));
+       if(groupedTab.attr('class')=='active'){
+           return;
+       }else{
+           groupedTab.attr('class','active');
+           individualTab.attr('class','');
+           individualView.css('display','none');
+           originalSpreadsheetView.css('display','block');
+           
+       }
+    });
+
+    individualTab.click(function(){
+        console.log(individualTab.attr('class'));
+       if(individualTab.attr('class')=='active'){
+           return;
+       }else{
+           individualTab.attr('class','active');
+           groupedTab.attr('class','');
+           individualView.css('display','block');
+           originalSpreadsheetView.css('display','none');
+       }
     });
 });
 
