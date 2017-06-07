@@ -19,7 +19,11 @@ class PreparedQuery extends Query{
 
         public function getArrayofResults($fetch_style=PDO::FETCH_BOTH){
             $result=$this->getResultsArrayArray($fetch_style);
-            $resultsArray=$result[0];
+            if(isset($result)&&!empty($result)){
+                $resultsArray=$result[0];
+            }else{
+                return;
+            }
             return $resultsArray;
         }
         

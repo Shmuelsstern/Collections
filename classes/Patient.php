@@ -16,20 +16,20 @@ class Patient{
     private $facilityPatientId;
     private $patientId;
 
-    public function __construct($dataObject){
-        $this->firstName = $dataObject['first_name'];
-        $this->lastName = $dataObject['last_name'];
-        $this->middleName = $dataObject['middle_name'];
-        $this->DOB = $dataObject['DOB'];
-        $this->medicaidId = $dataObject['medicaid_id'];
-        $this->medicareId = $dataObject['medicare_id'];
-        $this->ssId = $dataObject['ss_id'];
-        $this->otherInsurer1=$dataObject['other_insurer_1'];
-        $this->otherInsurer1Id=$dataObject['other_insurer_1_id'];
-        $this->otherInsurer2=$dataObject['other_insurer_2'];
-        $this->otherInsurer2Id=$dataObject['other_insurer_2_id'];
-        $this->facilityPatientId= $dataObject['facility_patient_id'];
-        $this->patientId= $dataObject['patient_id'];
+    public function __construct($data){
+        $this->firstName = $data['first_name'];
+        $this->lastName = $data['last_name'];
+        $this->middleName = $data['middle_name'];
+        $this->DOB = $data['DOB'];
+        $this->medicaidId = $data['medicaid_id'];
+        $this->medicareId = $data['medicare_id'];
+        $this->ssId = $data['ss_id'];
+        $this->otherInsurer1=$data['other_insurer_1'];
+        $this->otherInsurer1Id=$data['other_insurer_1_id'];
+        $this->otherInsurer2=$data['other_insurer_2'];
+        $this->otherInsurer2Id=$data['other_insurer_2_id'];
+        $this->facilityPatientId= $data['facility_patient_id'];
+        $this->patientId= $data['patient_id'];
     }
 
     public function renderInWell(){

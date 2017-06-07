@@ -12,16 +12,16 @@ class Facility{
     private $NPI;
     private $taxID;
 
-    public function __construct($dataObject){
-        $this->facilityId = $dataObject['facility_id'];
-        $this->facilityName = $dataObject['facility_name'];
-        $this->address1 = $dataObject['address_1'];
-        $this->address2 = $dataObject['address_2'];
-        $this->city = $dataObject['city'];
-        $this->state = $dataObject['state'];
-        $this->zip = $dataObject['zip'];
-        $this->NPI = $dataObject['NPI'];
-        $this->taxID = $dataObject['tax_id'];        
+    public function __construct($data){
+        $this->facilityId = $data['facility_id'];
+        $this->facilityName = $data['facility_name'];
+        $this->address1 = $data['address_1'];
+        $this->address2 = $data['address_2'];
+        $this->city = $data['city'];
+        $this->state = $data['state'];
+        $this->zip = $data['zip'];
+        $this->NPI = $data['NPI'];
+        $this->taxID = $data['tax_id'];        
     }
 
     public function renderInWell(){

@@ -4,12 +4,22 @@ class ResponsiblePayer{
 
     private $payerType;
     private $payer;
-    private $responsiblepayerId;
+    private $responsiblePayerId;
+    private $patientId;
+    private $agingTableId;
 
-    public function __construct($dataObject){
-        $this->payerType= $dataObject['payer_type'];
-        $this->payer = $dataObject['payer'];
-        $this->responsiblepayerId = $dataObject['responsible_payer_id'];
+    public function __construct($data){
+        $this->payerType= $data['payer_type'];
+        if(isset( $data['payer'])&&!empty( $data['payer'])){
+            $this->payer = $data['payer'];
+        }
+        $this->responsiblePayerId = $data['responsible_payer_id'];
+        $this->patientId= $data['patient_id'];
+        $this->agingTableId= $data['aging_table_id'];
+    }
+
+    public function getResponsiblePayerId(){
+        return $this->responsiblePayerId;
     }
 
     public function render(){

@@ -5,7 +5,7 @@
 include 'utils/top.php';
 
 ?>
-<div class='container'>
+<div class='container-fluid'>
     <div class='row'>
          <div class='col-sm-4'>
 <?php echo $viewmodel['facility']->renderInWell();
@@ -20,6 +20,19 @@ include 'utils/top.php';
 ?>
                 </div>
             </div>
+<?php foreach($viewmodel['collectibles'] as $collectible){ ?>
+            <div class="row">
+<?php   echo $collectible->renderCollectible();?>
+            </div> 
+<?php   foreach($collectible->getComments() as $comment){;?>
+            <div class="row">
+                <div class='col-xs-12'>
+<?php       echo $comment->render(); ?> 
+                </div>
+            </div> 
+<?php   } ?>                     
+            <hr/> 
+<?php } ?>            
         </div>
     </div>
 </div>

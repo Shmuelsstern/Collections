@@ -38,11 +38,12 @@ Class AgingSpreadsheet1{
     }
 
     function setResponsiblePayersInfo(){
+        echo 'responsiblepayer</b>';
         $ResponsiblePayersQuery = new Query("SELECT CONCAT(p.last_name, ', ', p.first_name) AS Name,  pt.payer_type AS 'Payer Type', rp.payer AS Payer
-                                            FROM `responsible_payer` rp 
+                                            FROM `responsible_payers` rp 
                                             JOIN `patients` p 
                                             ON rp.patient_id = p.patient_id 
-                                            JOIN payer_type pt 
+                                            JOIN payer_types pt 
                                             ON rp.payer_type_id = pt.payer_type_id
                                             WHERE rp.aging_table_id = $this->agingTableId 
                                             ORDER BY rp.responsible_payer_id ");
